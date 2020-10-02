@@ -1,4 +1,4 @@
-package com.supersidor.booratino;
+package com.supersidor.flightmap;
 
 
 import org.springframework.stereotype.Controller;

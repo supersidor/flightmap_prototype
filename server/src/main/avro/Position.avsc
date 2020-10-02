@@ -1,0 +1,36 @@
+{
+  "type": "record",
+  "name": "Position",
+  "namespace": "com.supersidor.avro",
+  "fields": [
+    {
+      "name": "title",
+      "type": "string"
+    },
+    {
+      "name": "altitude",
+      "type": "float"
+    },
+    {
+      "name": "latitude",
+      "type": "double"
+    },
+    {
+      "name": "longitude",
+      "type": "double"
+    },
+    {
+      "name": "heading",
+      "type": "float"
+    },
+    {
+      "name": "timestamp",
+      "type": "long"
+    },
+    {
+      "name": "test2",
+      "type": "long",
+      "default": 10
+    }
+  ]
+}
