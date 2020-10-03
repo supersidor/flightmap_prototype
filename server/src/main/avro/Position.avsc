@@ -26,11 +26,6 @@
     {
       "name": "timestamp",
       "type": "long"
-    },
-    {
-      "name": "test2",
-      "type": "long",
-      "default": 10
     }
   ]
 }

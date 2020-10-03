@@ -1,9 +1,7 @@
 package com.supersidor.flightmap;
 
-import com.supersidor.AvroUtils;
 import com.supersidor.avro.Position;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.avro.specific.SpecificData;
 import org.apache.avro.specific.SpecificRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Value;

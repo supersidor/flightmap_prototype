@@ -20,7 +20,7 @@ public class MessageTrace {
         Position value = rec.value();
         //count.incrementAndGet();
         //totalBytes.addAndGet(rec.value().getBytes().length);
-        log.info("{}",value);
+        //log.info("{}",value);
         //log.info("avg size: {}",(totalBytes.get()/count.get()));
     }
 }
