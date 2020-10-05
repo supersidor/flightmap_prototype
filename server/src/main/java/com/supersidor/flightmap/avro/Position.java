@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.supersidor.avro;
+package com.supersidor.flightmap.avro;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class Position extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 7322635680665916442L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Position\",\"namespace\":\"com.supersidor.avro\",\"fields\":[{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"altitude\",\"type\":\"float\"},{\"name\":\"latitude\",\"type\":\"double\"},{\"name\":\"longitude\",\"type\":\"double\"},{\"name\":\"heading\",\"type\":\"float\"},{\"name\":\"timestamp\",\"type\":\"long\"}]}");
+  private static final long serialVersionUID = -8179825546432007704L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Position\",\"namespace\":\"com.supersidor.flightmap.avro\",\"fields\":[{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"altitude\",\"type\":\"float\"},{\"name\":\"latitude\",\"type\":\"double\"},{\"name\":\"longitude\",\"type\":\"double\"},{\"name\":\"heading\",\"type\":\"float\"},{\"name\":\"timestamp\",\"type\":\"long\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -238,8 +238,8 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
    * Creates a new Position RecordBuilder.
    * @return A new Position RecordBuilder
    */
-  public static com.supersidor.avro.Position.Builder newBuilder() {
-    return new com.supersidor.avro.Position.Builder();
+  public static com.supersidor.flightmap.avro.Position.Builder newBuilder() {
+    return new com.supersidor.flightmap.avro.Position.Builder();
   }
 
   /**
@@ -247,11 +247,11 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
    * @param other The existing builder to copy.
    * @return A new Position RecordBuilder
    */
-  public static com.supersidor.avro.Position.Builder newBuilder(com.supersidor.avro.Position.Builder other) {
+  public static com.supersidor.flightmap.avro.Position.Builder newBuilder(com.supersidor.flightmap.avro.Position.Builder other) {
     if (other == null) {
-      return new com.supersidor.avro.Position.Builder();
+      return new com.supersidor.flightmap.avro.Position.Builder();
     } else {
-      return new com.supersidor.avro.Position.Builder(other);
+      return new com.supersidor.flightmap.avro.Position.Builder(other);
     }
   }
 
@@ -260,11 +260,11 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
    * @param other The existing instance to copy.
    * @return A new Position RecordBuilder
    */
-  public static com.supersidor.avro.Position.Builder newBuilder(com.supersidor.avro.Position other) {
+  public static com.supersidor.flightmap.avro.Position.Builder newBuilder(com.supersidor.flightmap.avro.Position other) {
     if (other == null) {
-      return new com.supersidor.avro.Position.Builder();
+      return new com.supersidor.flightmap.avro.Position.Builder();
     } else {
-      return new com.supersidor.avro.Position.Builder(other);
+      return new com.supersidor.flightmap.avro.Position.Builder(other);
     }
   }
 
@@ -291,7 +291,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.supersidor.avro.Position.Builder other) {
+    private Builder(com.supersidor.flightmap.avro.Position.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.title)) {
         this.title = data().deepCopy(fields()[0].schema(), other.title);
@@ -323,7 +323,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
      * Creates a Builder by copying an existing Position instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.supersidor.avro.Position other) {
+    private Builder(com.supersidor.flightmap.avro.Position other) {
       super(SCHEMA$);
       if (isValidValue(fields()[0], other.title)) {
         this.title = data().deepCopy(fields()[0].schema(), other.title);
@@ -365,7 +365,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'title'.
       * @return This builder.
       */
-    public com.supersidor.avro.Position.Builder setTitle(java.lang.String value) {
+    public com.supersidor.flightmap.avro.Position.Builder setTitle(java.lang.String value) {
       validate(fields()[0], value);
       this.title = value;
       fieldSetFlags()[0] = true;
@@ -385,7 +385,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * Clears the value of the 'title' field.
       * @return This builder.
       */
-    public com.supersidor.avro.Position.Builder clearTitle() {
+    public com.supersidor.flightmap.avro.Position.Builder clearTitle() {
       title = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -405,7 +405,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'altitude'.
       * @return This builder.
       */
-    public com.supersidor.avro.Position.Builder setAltitude(float value) {
+    public com.supersidor.flightmap.avro.Position.Builder setAltitude(float value) {
       validate(fields()[1], value);
       this.altitude = value;
       fieldSetFlags()[1] = true;
@@ -425,7 +425,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * Clears the value of the 'altitude' field.
       * @return This builder.
       */
-    public com.supersidor.avro.Position.Builder clearAltitude() {
+    public com.supersidor.flightmap.avro.Position.Builder clearAltitude() {
       fieldSetFlags()[1] = false;
       return this;
     }
@@ -444,7 +444,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'latitude'.
       * @return This builder.
       */
-    public com.supersidor.avro.Position.Builder setLatitude(double value) {
+    public com.supersidor.flightmap.avro.Position.Builder setLatitude(double value) {
       validate(fields()[2], value);
       this.latitude = value;
       fieldSetFlags()[2] = true;
@@ -464,7 +464,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * Clears the value of the 'latitude' field.
       * @return This builder.
       */
-    public com.supersidor.avro.Position.Builder clearLatitude() {
+    public com.supersidor.flightmap.avro.Position.Builder clearLatitude() {
       fieldSetFlags()[2] = false;
       return this;
     }
@@ -483,7 +483,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'longitude'.
       * @return This builder.
       */
-    public com.supersidor.avro.Position.Builder setLongitude(double value) {
+    public com.supersidor.flightmap.avro.Position.Builder setLongitude(double value) {
       validate(fields()[3], value);
       this.longitude = value;
       fieldSetFlags()[3] = true;
@@ -503,7 +503,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * Clears the value of the 'longitude' field.
       * @return This builder.
       */
-    public com.supersidor.avro.Position.Builder clearLongitude() {
+    public com.supersidor.flightmap.avro.Position.Builder clearLongitude() {
       fieldSetFlags()[3] = false;
       return this;
     }
@@ -522,7 +522,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'heading'.
       * @return This builder.
       */
-    public com.supersidor.avro.Position.Builder setHeading(float value) {
+    public com.supersidor.flightmap.avro.Position.Builder setHeading(float value) {
       validate(fields()[4], value);
       this.heading = value;
       fieldSetFlags()[4] = true;
@@ -542,7 +542,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * Clears the value of the 'heading' field.
       * @return This builder.
       */
-    public com.supersidor.avro.Position.Builder clearHeading() {
+    public com.supersidor.flightmap.avro.Position.Builder clearHeading() {
       fieldSetFlags()[4] = false;
       return this;
     }
@@ -561,7 +561,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'timestamp'.
       * @return This builder.
       */
-    public com.supersidor.avro.Position.Builder setTimestamp(long value) {
+    public com.supersidor.flightmap.avro.Position.Builder setTimestamp(long value) {
       validate(fields()[5], value);
       this.timestamp = value;
       fieldSetFlags()[5] = true;
@@ -581,7 +581,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * Clears the value of the 'timestamp' field.
       * @return This builder.
       */
-    public com.supersidor.avro.Position.Builder clearTimestamp() {
+    public com.supersidor.flightmap.avro.Position.Builder clearTimestamp() {
       fieldSetFlags()[5] = false;
       return this;
     }

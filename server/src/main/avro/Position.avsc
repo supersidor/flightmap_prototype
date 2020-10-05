@@ -1,7 +1,7 @@
 {
   "type": "record",
   "name": "Position",
-  "namespace": "com.supersidor.avro",
+  "namespace": "com.supersidor.flightmap.avro",
   "fields": [
     {
       "name": "title",

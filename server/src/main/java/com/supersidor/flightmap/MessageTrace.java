@@ -1,6 +1,6 @@
 package com.supersidor.flightmap;
 
-import com.supersidor.avro.Position;
+import com.supersidor.flightmap.avro.Position;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;

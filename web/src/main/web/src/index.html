@@ -141,12 +141,15 @@
       //hud.trim.innerText = msg.trim;
       //hud.rudder_trim.innerText = msg.rudder_trim;
     }
-
+    function sendName() {
+      stompClient.send("/app/hello", {}, JSON.stringify({'name': 'TEST1'}));
+    }
     function connect() {
       let socket = new SockJS("http://" + window.location.hostname + ":8080/ws");
       stompClient = Stomp.over(socket);
       stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
+        sendName();
         // /user
         stompClient.subscribe('/topic/position', function (greeting) {
           //console.log(JSON.parse(greeting.body).content);

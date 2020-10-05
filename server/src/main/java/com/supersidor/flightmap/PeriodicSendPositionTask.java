@@ -1,7 +1,7 @@
 package com.supersidor.flightmap;
 
-import com.supersidor.avro.Position;
 import com.supersidor.flightmap.CurrentPositionService;
+import com.supersidor.flightmap.avro.Position;
 import com.supersidor.flightmap.websocket.WebSocketPosition;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
