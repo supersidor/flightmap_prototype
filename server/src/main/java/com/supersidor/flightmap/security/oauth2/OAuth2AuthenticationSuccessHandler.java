@@ -64,11 +64,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         String token = tokenProvider.createToken(authentication);
 
-        response.addCookie(new Cookie("MyBearer",token));
-        response.addHeader("MyBearer-header",token);
+        //response.addCookie(new Cookie("MyBearer",token));
+        //response.addHeader("MyBearer-header",token);
 
         return UriComponentsBuilder.fromUriString(targetUrl)
-                //.queryParam("token", token)
+                .queryParam("token", token)
                 .build().toUriString();
     }
 

@@ -35,8 +35,6 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomOAuth2UserService customOAuth2UserService;
 
-
-
     /*@Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
@@ -75,15 +73,17 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/",
                         "/error",
+                        "/api/**",
+                        "/ui/**",
                         "/favicon.ico",
+                        "/manifest.json",
                         "/**/*.png",
                         "/**/*.gif",
                         "/**/*.svg",
                         "/**/*.jpg",
                         "/**/*.html",
                         "/**/*.css",
-                        "/**/*.js",
-                        "/webjars/**")
+                        "/static/**")
                         .permitAll()
                     .antMatchers("/auth/**", "/oauth2/**")
                         .permitAll()
