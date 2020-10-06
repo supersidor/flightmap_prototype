@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Login.css';
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../../constants';
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN ,OAUTH2_DEFAULT_REDIRECT_URI} from '../../constants';
 import { login } from '../../util/APIUtils';
 import { Link, Redirect } from 'react-router-dom'
 import fbLogo from '../../img/fb-logo.png';
@@ -9,6 +9,13 @@ import githubLogo from '../../img/github-logo.png';
 import Alert from 'react-s-alert';
 
 class Login extends Component {
+    getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+
+        var results = regex.exec(this.props.location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
     componentDidMount() {
         // If the OAuth2 login encounters an error, the user is redirected to the /login page with an error.
         // Here we display the error and then remove the error query parameter from the location.
@@ -26,6 +33,7 @@ class Login extends Component {
     }
     
     render() {
+
         if(this.props.authenticated) {
             return <Redirect
                 to={{
@@ -33,17 +41,17 @@ class Login extends Component {
                 state: { from: this.props.location }
             }}/>;            
         }
+        let redirectUri = this.getUrlParameter("redirect_uri")
+        if (!redirectUri){
+            redirectUri = OAUTH2_DEFAULT_REDIRECT_URI;
+        }
+        console.log("redirectUri:"+redirectUri);
 
         return (
             <div className="login-container">
                 <div className="login-content">
-                    <h1 className="login-title">Login to SpringSocial</h1>
-                    <SocialLogin />
-                    <div className="or-separator">
-                        <span className="or-text">OR</span>
-                    </div>
-                    <LoginForm {...this.props} />
-                    <span className="signup-link">New user? <Link to="/signup">Sign up!</Link></span>
+                    <h1 className="login-title">Login to Flightmap</h1>
+                    <SocialLogin redirectUri={redirectUri}/>
                 </div>
             </div>
         );
@@ -52,19 +60,16 @@ class Login extends Component {
 
 class SocialLogin extends Component {
     render() {
+        //var facebookUrl =
         return (
             <div className="social-login">
-                <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>
+                <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL+this.props.redirectUri}>
                     <img src={googleLogo} alt="Google" /> Log in with Google</a>
-                <a className="btn btn-block social-btn facebook" href={FACEBOOK_AUTH_URL}>
+                <a className="btn btn-block social-btn facebook" href={FACEBOOK_AUTH_URL+this.props.redirectUri}>
                     <img src={fbLogo} alt="Facebook" /> Log in with Facebook</a>
-                <a className="btn btn-block social-btn github" href={GITHUB_AUTH_URL}>
+                <a className="btn btn-block social-btn github" href={GITHUB_AUTH_URL+this.props.redirectUri}>
                     <img src={githubLogo} alt="Github" /> Log in with Github</a>
-
-                <a className="btn btn-block social-btn github" href={GITHUB_AUTH_URL}>
-                    <img src={githubLogo} alt="Github" /> Log in with Github</a>
-
-                </div>
+            </div>
         );
     }
 }

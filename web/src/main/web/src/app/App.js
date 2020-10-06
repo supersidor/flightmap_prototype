@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
   Route,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom';
 
 import AppHeader from '../common/AppHeader';
@@ -78,6 +79,13 @@ class App extends Component {
         </div>
         <div className="app-body">
           <Switch>
+            <Route exact path="/"
+                render={() => {
+                  return (
+                          <Redirect to="/ui" />
+                  )
+                }}
+            />
             <Route exact path="/ui" component={Home}></Route>
             <Route exact path="/ui/hello" component={Hello}></Route>
             <PrivateRoute path="/ui/profile" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
