@@ -1,12 +1,15 @@
 package com.supersidor.flightmap;
 
+import com.supersidor.flightmap.avro.Position;
 import com.supersidor.flightmap.config.AppProperties;
+import com.supersidor.flightmap.controller.SimControllerTest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.specific.SpecificRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,10 +34,25 @@ import java.util.Map;
 
 @SpringBootApplication
 @EnableConfigurationProperties(AppProperties.class)
+@Slf4j
 public class FlightmapApplication{
 
 	public static void main(String[] args) {
 		SpringApplication.run(FlightmapApplication.class, args);
+	}
+
+	@Autowired
+	SimControllerTest test;
+	@Bean
+	CommandLineRunner runner(){
+		return (args)->{
+			for (int  i=0;i<1000000;i++){
+				Position pos = new Position();
+				pos.setTitle("test"+i);
+				test.post(pos);
+				log.info("Sent message {}",i);
+			}
+		};
 	}
 
 }

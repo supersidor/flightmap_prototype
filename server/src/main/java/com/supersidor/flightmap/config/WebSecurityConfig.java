@@ -26,31 +26,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 )
 public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+
     private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
-    @Autowired
     private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
-    @Autowired
     private CustomOAuth2UserService customOAuth2UserService;
 
-    /*@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
-        http
-                .cors()
-                .and()
-                .authorizeRequests(a -> a
-                        .antMatchers("/", "/error", "/webjars/**", "/ws/**","/oauth2/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .exceptionHandling(e -> e
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                )
-                .oauth2Login();
-        // @formatter:on
-    }*/
+    public WebSecurityConfig(OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler, CustomOAuth2UserService customOAuth2UserService) {
+        this.oAuth2AuthenticationFailureHandler = oAuth2AuthenticationFailureHandler;
+        this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
+        this.customOAuth2UserService = customOAuth2UserService;
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

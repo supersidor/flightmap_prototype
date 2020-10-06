@@ -1,0 +1,73 @@
+version: "2"
+networks:
+  flightmap-network:
+    driver: bridge
+services:
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    networks:
+      - flightmap-network
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    volumes:
+      - '../docker_volumes/zookeeper:/bitnami/zookeeper'
+  kafka-1:
+    image: 'bitnami/kafka:latest'
+    networks:
+      - flightmap-network
+    ports:
+      - '9092:9092'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${KAFKA_HOST_NAME}:9092
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+    volumes:
+      - '../docker_volumes/kafka-1:/bitnami/kafka'
+  kafka-2:
+    image: 'bitnami/kafka:latest'
+    networks:
+      - flightmap-network
+    ports:
+      - '9093:9093'
+    environment:
+      - KAFKA_BROKER_ID=2
+      - KAFKA_LISTENERS=PLAINTEXT://:9093
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${KAFKA_HOST_NAME}:9093
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+    volumes:
+      - '../docker_volumes/kafka-2:/bitnami/kafka'
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:latest
+    hostname: schema-registry
+    networks:
+      - flightmap-network
+    depends_on:
+      - zookeeper
+      - kafka-1
+      - kafka-2
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181"
+
+  postgres:
+    image: postgres
+    networks:
+      - flightmap-network
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+    ports:
+      - 5432:5432
+    volumes:
+    - '../docker_volumes/postgres:/var/lib/postgresql/data'

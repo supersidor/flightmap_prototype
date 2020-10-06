@@ -9,28 +9,27 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tech.allegro.schema.json2avro.converter.JsonAvroConverter;
 
 import java.io.IOException;
 
-@RestController
 @Slf4j
-@RequestMapping("/api/sim")
-public class SimController {
+@Service
+public class SimControllerTest {
     private static JsonAvroConverter converter = new JsonAvroConverter();
     private KafkaTemplate<String, SpecificRecord> kafkaTemplate;
     @Value("${kafka.topic.position}")
     private String positionTopicName;
-    public SimController(KafkaTemplate<String, SpecificRecord> template){
+    public SimControllerTest(KafkaTemplate<String, SpecificRecord> template){
         this.kafkaTemplate = template;
     }
-    @PostMapping
-    @PreAuthorize("hasRole('USER')")
-    public void post(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody String posJson) throws IOException {
-        log.info("{}",posJson);
-        Position position = converter.convertToSpecificRecord(posJson.getBytes(), Position.class, Position.SCHEMA$);
-        ProducerRecord<String, SpecificRecord> record = new ProducerRecord<>(positionTopicName, null, position);
+    public void post(Position pos) throws IOException {
+        ProducerRecord<String, SpecificRecord> record = new ProducerRecord<>(positionTopicName, null, pos);
         kafkaTemplate.send(record);
     }
 }
