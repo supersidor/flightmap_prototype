@@ -5,6 +5,7 @@ import com.supersidor.flightmap.exception.ResourceNotFoundException;
 import com.supersidor.flightmap.repository.UserRepository;
 import com.supersidor.flightmap.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,6 +35,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Transactional
+    @Cacheable("books")
     public UserDetails loadUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(
             () -> new ResourceNotFoundException("User", "id", id)
