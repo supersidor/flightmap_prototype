@@ -26,6 +26,11 @@
     {
       "name": "timestamp",
       "type": "long"
+    },
+    {
+      "name": "userId",
+      "type": "long",
+      "default": -1
     }
   ]
 }

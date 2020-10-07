@@ -92,6 +92,8 @@ class App extends Component {
               component={Profile}></PrivateRoute>
             <Route path="/ui/login"
               render={(props) => <Login authenticated={this.state.authenticated} {...props} />}></Route>
+            <Route path="/ui/login_console"
+                   render={(props) => <Login authenticated={false} {...props} />}></Route>
             <Route path="/ui/signup"
               render={(props) => <Signup authenticated={this.state.authenticated} {...props} />}></Route>
             <Route path="/ui/oauth2/redirect" component={OAuth2RedirectHandler}></Route>

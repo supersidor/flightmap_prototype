@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class Position extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -8179825546432007704L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Position\",\"namespace\":\"com.supersidor.flightmap.avro\",\"fields\":[{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"altitude\",\"type\":\"float\"},{\"name\":\"latitude\",\"type\":\"double\"},{\"name\":\"longitude\",\"type\":\"double\"},{\"name\":\"heading\",\"type\":\"float\"},{\"name\":\"timestamp\",\"type\":\"long\"}]}");
+  private static final long serialVersionUID = 124761028540376934L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Position\",\"namespace\":\"com.supersidor.flightmap.avro\",\"fields\":[{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"altitude\",\"type\":\"float\"},{\"name\":\"latitude\",\"type\":\"double\"},{\"name\":\"longitude\",\"type\":\"double\"},{\"name\":\"heading\",\"type\":\"float\"},{\"name\":\"timestamp\",\"type\":\"long\"},{\"name\":\"userId\",\"type\":\"long\",\"default\":-1}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -77,6 +77,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
   @Deprecated public double longitude;
   @Deprecated public float heading;
   @Deprecated public long timestamp;
+  @Deprecated public long userId;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -93,14 +94,16 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
    * @param longitude The new value for longitude
    * @param heading The new value for heading
    * @param timestamp The new value for timestamp
+   * @param userId The new value for userId
    */
-  public Position(java.lang.String title, java.lang.Float altitude, java.lang.Double latitude, java.lang.Double longitude, java.lang.Float heading, java.lang.Long timestamp) {
+  public Position(java.lang.String title, java.lang.Float altitude, java.lang.Double latitude, java.lang.Double longitude, java.lang.Float heading, java.lang.Long timestamp, java.lang.Long userId) {
     this.title = title;
     this.altitude = altitude;
     this.latitude = latitude;
     this.longitude = longitude;
     this.heading = heading;
     this.timestamp = timestamp;
+    this.userId = userId;
   }
 
   public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
@@ -114,6 +117,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
     case 3: return longitude;
     case 4: return heading;
     case 5: return timestamp;
+    case 6: return userId;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -128,6 +132,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
     case 3: longitude = (java.lang.Double)value$; break;
     case 4: heading = (java.lang.Float)value$; break;
     case 5: timestamp = (java.lang.Long)value$; break;
+    case 6: userId = (java.lang.Long)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -235,6 +240,23 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   /**
+   * Gets the value of the 'userId' field.
+   * @return The value of the 'userId' field.
+   */
+  public long getUserId() {
+    return userId;
+  }
+
+
+  /**
+   * Sets the value of the 'userId' field.
+   * @param value the value to set.
+   */
+  public void setUserId(long value) {
+    this.userId = value;
+  }
+
+  /**
    * Creates a new Position RecordBuilder.
    * @return A new Position RecordBuilder
    */
@@ -281,6 +303,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
     private double longitude;
     private float heading;
     private long timestamp;
+    private long userId;
 
     /** Creates a new Builder */
     private Builder() {
@@ -317,6 +340,10 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
         this.timestamp = data().deepCopy(fields()[5].schema(), other.timestamp);
         fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
+      if (isValidValue(fields()[6], other.userId)) {
+        this.userId = data().deepCopy(fields()[6].schema(), other.userId);
+        fieldSetFlags()[6] = other.fieldSetFlags()[6];
+      }
     }
 
     /**
@@ -348,6 +375,10 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       if (isValidValue(fields()[5], other.timestamp)) {
         this.timestamp = data().deepCopy(fields()[5].schema(), other.timestamp);
         fieldSetFlags()[5] = true;
+      }
+      if (isValidValue(fields()[6], other.userId)) {
+        this.userId = data().deepCopy(fields()[6].schema(), other.userId);
+        fieldSetFlags()[6] = true;
       }
     }
 
@@ -586,6 +617,45 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       return this;
     }
 
+    /**
+      * Gets the value of the 'userId' field.
+      * @return The value.
+      */
+    public long getUserId() {
+      return userId;
+    }
+
+
+    /**
+      * Sets the value of the 'userId' field.
+      * @param value The value of 'userId'.
+      * @return This builder.
+      */
+    public com.supersidor.flightmap.avro.Position.Builder setUserId(long value) {
+      validate(fields()[6], value);
+      this.userId = value;
+      fieldSetFlags()[6] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'userId' field has been set.
+      * @return True if the 'userId' field has been set, false otherwise.
+      */
+    public boolean hasUserId() {
+      return fieldSetFlags()[6];
+    }
+
+
+    /**
+      * Clears the value of the 'userId' field.
+      * @return This builder.
+      */
+    public com.supersidor.flightmap.avro.Position.Builder clearUserId() {
+      fieldSetFlags()[6] = false;
+      return this;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public Position build() {
@@ -597,6 +667,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
         record.longitude = fieldSetFlags()[3] ? this.longitude : (java.lang.Double) defaultValue(fields()[3]);
         record.heading = fieldSetFlags()[4] ? this.heading : (java.lang.Float) defaultValue(fields()[4]);
         record.timestamp = fieldSetFlags()[5] ? this.timestamp : (java.lang.Long) defaultValue(fields()[5]);
+        record.userId = fieldSetFlags()[6] ? this.userId : (java.lang.Long) defaultValue(fields()[6]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -641,6 +712,8 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
 
     out.writeLong(this.timestamp);
 
+    out.writeLong(this.userId);
+
   }
 
   @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
@@ -660,8 +733,10 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
 
       this.timestamp = in.readLong();
 
+      this.userId = in.readLong();
+
     } else {
-      for (int i = 0; i < 6; i++) {
+      for (int i = 0; i < 7; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
           this.title = in.readString();
@@ -685,6 +760,10 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
 
         case 5:
           this.timestamp = in.readLong();
+          break;
+
+        case 6:
+          this.userId = in.readLong();
           break;
 
         default:

@@ -30,6 +30,7 @@ public class SimController {
     public void post(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody String posJson) throws IOException {
         log.info("{}",posJson);
         Position position = converter.convertToSpecificRecord(posJson.getBytes(), Position.class, Position.SCHEMA$);
+        position.setUserId(userPrincipal.getId());
         ProducerRecord<String, SpecificRecord> record = new ProducerRecord<>(positionTopicName, null, position);
         kafkaTemplate.send(record);
     }

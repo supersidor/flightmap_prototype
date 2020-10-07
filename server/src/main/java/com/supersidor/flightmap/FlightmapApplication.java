@@ -46,12 +46,13 @@ public class FlightmapApplication{
 	@Bean
 	CommandLineRunner runner(){
 		return (args)->{
-			for (int  i=0;i<1000000;i++){
-				Position pos = new Position();
-				pos.setTitle("test"+i);
-				test.post(pos);
-				log.info("Sent message {}",i);
-			}
+			log.info("Application started");
+//			for (int  i=0;i<1000000;i++){
+//				Position pos = new Position();
+//				pos.setTitle("test"+i);
+//				test.post(pos);
+//				log.info("Sent message {}",i);
+//			}
 		};
 	}
 
