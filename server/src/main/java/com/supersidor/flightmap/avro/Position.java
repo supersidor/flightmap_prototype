@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class Position extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 124761028540376934L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Position\",\"namespace\":\"com.supersidor.flightmap.avro\",\"fields\":[{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"altitude\",\"type\":\"float\"},{\"name\":\"latitude\",\"type\":\"double\"},{\"name\":\"longitude\",\"type\":\"double\"},{\"name\":\"heading\",\"type\":\"float\"},{\"name\":\"timestamp\",\"type\":\"long\"},{\"name\":\"userId\",\"type\":\"long\",\"default\":-1}]}");
+  private static final long serialVersionUID = 2943036908961337023L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Position\",\"namespace\":\"com.supersidor.flightmap.avro\",\"fields\":[{\"name\":\"aircraftId\",\"type\":\"long\"},{\"name\":\"altitude\",\"type\":\"float\"},{\"name\":\"latitude\",\"type\":\"double\"},{\"name\":\"longitude\",\"type\":\"double\"},{\"name\":\"heading\",\"type\":\"float\"},{\"name\":\"timestamp\",\"type\":\"long\"},{\"name\":\"userId\",\"type\":\"long\",\"default\":-1}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -71,7 +71,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
     return DECODER.decode(b);
   }
 
-  @Deprecated public java.lang.String title;
+  @Deprecated public long aircraftId;
   @Deprecated public float altitude;
   @Deprecated public double latitude;
   @Deprecated public double longitude;
@@ -88,7 +88,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
 
   /**
    * All-args constructor.
-   * @param title The new value for title
+   * @param aircraftId The new value for aircraftId
    * @param altitude The new value for altitude
    * @param latitude The new value for latitude
    * @param longitude The new value for longitude
@@ -96,8 +96,8 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
    * @param timestamp The new value for timestamp
    * @param userId The new value for userId
    */
-  public Position(java.lang.String title, java.lang.Float altitude, java.lang.Double latitude, java.lang.Double longitude, java.lang.Float heading, java.lang.Long timestamp, java.lang.Long userId) {
-    this.title = title;
+  public Position(java.lang.Long aircraftId, java.lang.Float altitude, java.lang.Double latitude, java.lang.Double longitude, java.lang.Float heading, java.lang.Long timestamp, java.lang.Long userId) {
+    this.aircraftId = aircraftId;
     this.altitude = altitude;
     this.latitude = latitude;
     this.longitude = longitude;
@@ -111,7 +111,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return title;
+    case 0: return aircraftId;
     case 1: return altitude;
     case 2: return latitude;
     case 3: return longitude;
@@ -126,7 +126,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: title = value$ != null ? value$.toString() : null; break;
+    case 0: aircraftId = (java.lang.Long)value$; break;
     case 1: altitude = (java.lang.Float)value$; break;
     case 2: latitude = (java.lang.Double)value$; break;
     case 3: longitude = (java.lang.Double)value$; break;
@@ -138,20 +138,20 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   /**
-   * Gets the value of the 'title' field.
-   * @return The value of the 'title' field.
+   * Gets the value of the 'aircraftId' field.
+   * @return The value of the 'aircraftId' field.
    */
-  public java.lang.String getTitle() {
-    return title;
+  public long getAircraftId() {
+    return aircraftId;
   }
 
 
   /**
-   * Sets the value of the 'title' field.
+   * Sets the value of the 'aircraftId' field.
    * @param value the value to set.
    */
-  public void setTitle(java.lang.String value) {
-    this.title = value;
+  public void setAircraftId(long value) {
+    this.aircraftId = value;
   }
 
   /**
@@ -297,7 +297,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Position>
     implements org.apache.avro.data.RecordBuilder<Position> {
 
-    private java.lang.String title;
+    private long aircraftId;
     private float altitude;
     private double latitude;
     private double longitude;
@@ -316,8 +316,8 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
      */
     private Builder(com.supersidor.flightmap.avro.Position.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.title)) {
-        this.title = data().deepCopy(fields()[0].schema(), other.title);
+      if (isValidValue(fields()[0], other.aircraftId)) {
+        this.aircraftId = data().deepCopy(fields()[0].schema(), other.aircraftId);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.altitude)) {
@@ -352,8 +352,8 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
      */
     private Builder(com.supersidor.flightmap.avro.Position other) {
       super(SCHEMA$);
-      if (isValidValue(fields()[0], other.title)) {
-        this.title = data().deepCopy(fields()[0].schema(), other.title);
+      if (isValidValue(fields()[0], other.aircraftId)) {
+        this.aircraftId = data().deepCopy(fields()[0].schema(), other.aircraftId);
         fieldSetFlags()[0] = true;
       }
       if (isValidValue(fields()[1], other.altitude)) {
@@ -383,41 +383,40 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
     }
 
     /**
-      * Gets the value of the 'title' field.
+      * Gets the value of the 'aircraftId' field.
       * @return The value.
       */
-    public java.lang.String getTitle() {
-      return title;
+    public long getAircraftId() {
+      return aircraftId;
     }
 
 
     /**
-      * Sets the value of the 'title' field.
-      * @param value The value of 'title'.
+      * Sets the value of the 'aircraftId' field.
+      * @param value The value of 'aircraftId'.
       * @return This builder.
       */
-    public com.supersidor.flightmap.avro.Position.Builder setTitle(java.lang.String value) {
+    public com.supersidor.flightmap.avro.Position.Builder setAircraftId(long value) {
       validate(fields()[0], value);
-      this.title = value;
+      this.aircraftId = value;
       fieldSetFlags()[0] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'title' field has been set.
-      * @return True if the 'title' field has been set, false otherwise.
+      * Checks whether the 'aircraftId' field has been set.
+      * @return True if the 'aircraftId' field has been set, false otherwise.
       */
-    public boolean hasTitle() {
+    public boolean hasAircraftId() {
       return fieldSetFlags()[0];
     }
 
 
     /**
-      * Clears the value of the 'title' field.
+      * Clears the value of the 'aircraftId' field.
       * @return This builder.
       */
-    public com.supersidor.flightmap.avro.Position.Builder clearTitle() {
-      title = null;
+    public com.supersidor.flightmap.avro.Position.Builder clearAircraftId() {
       fieldSetFlags()[0] = false;
       return this;
     }
@@ -661,7 +660,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
     public Position build() {
       try {
         Position record = new Position();
-        record.title = fieldSetFlags()[0] ? this.title : (java.lang.String) defaultValue(fields()[0]);
+        record.aircraftId = fieldSetFlags()[0] ? this.aircraftId : (java.lang.Long) defaultValue(fields()[0]);
         record.altitude = fieldSetFlags()[1] ? this.altitude : (java.lang.Float) defaultValue(fields()[1]);
         record.latitude = fieldSetFlags()[2] ? this.latitude : (java.lang.Double) defaultValue(fields()[2]);
         record.longitude = fieldSetFlags()[3] ? this.longitude : (java.lang.Double) defaultValue(fields()[3]);
@@ -700,7 +699,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    out.writeString(this.title);
+    out.writeLong(this.aircraftId);
 
     out.writeFloat(this.altitude);
 
@@ -721,7 +720,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.title = in.readString();
+      this.aircraftId = in.readLong();
 
       this.altitude = in.readFloat();
 
@@ -739,7 +738,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       for (int i = 0; i < 7; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.title = in.readString();
+          this.aircraftId = in.readLong();
           break;
 
         case 1:

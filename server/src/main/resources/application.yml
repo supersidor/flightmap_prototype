@@ -2,7 +2,7 @@ server:
   port: 8080
 kafka:
   topic:
-    position: position3
+    position: position5
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres

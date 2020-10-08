@@ -4,8 +4,8 @@
   "namespace": "com.supersidor.flightmap.avro",
   "fields": [
     {
-      "name": "title",
-      "type": "string"
+      "name": "aircraftId",
+      "type": "long"
     },
     {
       "name": "altitude",

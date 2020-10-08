@@ -7,7 +7,7 @@
         <artifactId>flightmap-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-	<groupId>com.supersidor</groupId>
+
 	<artifactId>flightmap-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>flightmap-server</name>
@@ -150,10 +150,7 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+
 
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

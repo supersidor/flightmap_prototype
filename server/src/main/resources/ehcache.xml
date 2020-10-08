@@ -5,9 +5,9 @@
             http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd
             http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
 
-    <cache alias="books">
+    <cache alias="users">
         <key-type>java.lang.Long</key-type>
-        <value-type>org.springframework.security.core.userdetails.UserDetails</value-type>
+        <value-type>com.supersidor.flightmap.model.User</value-type>
         <expiry>
             <ttl unit="seconds">3600</ttl>
         </expiry>
@@ -29,5 +29,30 @@
             <heap unit="entries">10000</heap>
         </resources>
     </cache>
+    <cache alias="aircrafts">
+        <key-type>java.lang.String</key-type>
+        <value-type>com.supersidor.flightmap.model.Aircraft</value-type>
+        <expiry>
+            <ttl unit="seconds">3600</ttl>
+        </expiry>
+
+        <listeners>
+            <listener>
+                <class>com.supersidor.flightmap.cache.CacheEventLogger</class>
+                <event-firing-mode>ASYNCHRONOUS</event-firing-mode>
+                <event-ordering-mode>UNORDERED</event-ordering-mode>
+                <events-to-fire-on>CREATED</events-to-fire-on>
+                <events-to-fire-on>EXPIRED</events-to-fire-on>
+                <events-to-fire-on>EVICTED</events-to-fire-on>
+                <events-to-fire-on>REMOVED</events-to-fire-on>
+                <events-to-fire-on>UPDATED</events-to-fire-on>
+            </listener>
+        </listeners>
+
+        <resources>
+            <heap unit="entries">1000</heap>
+        </resources>
+    </cache>
+
 
 </config>

@@ -16,13 +16,13 @@ import java.io.IOException;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/sim")
-public class SimController {
+@RequestMapping("/api/position")
+public class PositionController {
     private static JsonAvroConverter converter = new JsonAvroConverter();
     private KafkaTemplate<String, SpecificRecord> kafkaTemplate;
     @Value("${kafka.topic.position}")
     private String positionTopicName;
-    public SimController(KafkaTemplate<String, SpecificRecord> template){
+    public PositionController(KafkaTemplate<String, SpecificRecord> template){
         this.kafkaTemplate = template;
     }
     @PostMapping

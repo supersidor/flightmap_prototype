@@ -10,6 +10,6 @@ public class CacheEventLogger
 
     @Override
     public void onEvent(CacheEvent<? extends Object, ? extends Object> cacheEvent) {
-        log.trace( "{}",cacheEvent);
+        log.info( "{}",cacheEvent);
     }
 }

@@ -24,10 +24,6 @@ public class UserController {
         return userRepository.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
-    @GetMapping("/test")
-    public String getCurrentUser() {
-        return "hello world";
-    }
 }
 
 
