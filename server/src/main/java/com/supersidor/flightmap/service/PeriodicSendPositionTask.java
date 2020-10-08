@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
 public class PeriodicSendPositionTask {
 
     private static final String WS_MESSAGE_TRANSFER_DESTINATION = "/topic/position";

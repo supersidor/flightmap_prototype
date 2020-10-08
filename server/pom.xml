@@ -146,6 +146,11 @@
 			<artifactId>flightmap-web</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-messaging</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -166,6 +171,7 @@
 			</plugin>
 
 
+			<!--
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
@@ -186,6 +192,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			-->
 
 			<plugin>
 				<groupId>org.apache.avro</groupId>

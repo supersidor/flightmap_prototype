@@ -19,11 +19,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        securedEnabled = true,
-        jsr250Enabled = true,
-        prePostEnabled = true
-)
+//@EnableGlobalMethodSecurity(
+//        securedEnabled = true,
+//        jsr250Enabled = true,
+//        prePostEnabled = true
+//)
 public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 
 
@@ -60,9 +60,11 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
                     .and()
                 .authorizeRequests()
                     .antMatchers("/",
+                        "/leafletjs/**",
                         "/error",
-                        "/api/**",
+                        "/ws",
                         "/ui/**",
+                        "/*.js",
                         "/favicon.ico",
                         "/manifest.json",
                         "/**/*.png",
@@ -71,9 +73,8 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
                         "/**/*.jpg",
                         "/**/*.html",
                         "/**/*.css",
+                        "/oauth2/**",
                         "/static/**")
-                        .permitAll()
-                    .antMatchers("/auth/**", "/oauth2/**")
                         .permitAll()
                     .anyRequest()
                         .authenticated()

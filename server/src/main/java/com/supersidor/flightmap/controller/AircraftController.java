@@ -25,12 +25,10 @@ import java.util.Optional;
 @RequestMapping("/api/aircraft")
 public class AircraftController {
     private AircraftRepository repository;
-
     public AircraftController(AircraftRepository repository){
         this.repository = repository;
     }
-    @PreAuthorize("hasRole('USER')")
-    @Transactional
+
     @GetMapping("/register")
     public Long registerAircraft(@RequestParam String name) throws IOException {
         return  repository.getAircraftByName(name).getId();

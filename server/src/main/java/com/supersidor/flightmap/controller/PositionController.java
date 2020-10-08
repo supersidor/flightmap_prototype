@@ -26,7 +26,6 @@ public class PositionController {
         this.kafkaTemplate = template;
     }
     @PostMapping
-    @PreAuthorize("hasRole('USER')")
     public void post(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody String posJson) throws IOException {
         log.info("{}",posJson);
         Position position = converter.convertToSpecificRecord(posJson.getBytes(), Position.class, Position.SCHEMA$);
