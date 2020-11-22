@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class Position extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 2943036908961337023L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Position\",\"namespace\":\"com.supersidor.flightmap.avro\",\"fields\":[{\"name\":\"aircraftId\",\"type\":\"long\"},{\"name\":\"altitude\",\"type\":\"float\"},{\"name\":\"latitude\",\"type\":\"double\"},{\"name\":\"longitude\",\"type\":\"double\"},{\"name\":\"heading\",\"type\":\"float\"},{\"name\":\"timestamp\",\"type\":\"long\"},{\"name\":\"userId\",\"type\":\"long\",\"default\":-1}]}");
+  private static final long serialVersionUID = -2647015872952315472L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Position\",\"namespace\":\"com.supersidor.flightmap.avro\",\"fields\":[{\"name\":\"aircraftId\",\"type\":\"long\"},{\"name\":\"altitude\",\"type\":\"int\"},{\"name\":\"latitude\",\"type\":\"double\"},{\"name\":\"longitude\",\"type\":\"double\"},{\"name\":\"heading\",\"type\":\"float\"},{\"name\":\"timestamp\",\"type\":\"long\"},{\"name\":\"userId\",\"type\":\"long\",\"default\":-1}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -72,7 +72,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   @Deprecated public long aircraftId;
-  @Deprecated public float altitude;
+  @Deprecated public int altitude;
   @Deprecated public double latitude;
   @Deprecated public double longitude;
   @Deprecated public float heading;
@@ -96,7 +96,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
    * @param timestamp The new value for timestamp
    * @param userId The new value for userId
    */
-  public Position(java.lang.Long aircraftId, java.lang.Float altitude, java.lang.Double latitude, java.lang.Double longitude, java.lang.Float heading, java.lang.Long timestamp, java.lang.Long userId) {
+  public Position(java.lang.Long aircraftId, java.lang.Integer altitude, java.lang.Double latitude, java.lang.Double longitude, java.lang.Float heading, java.lang.Long timestamp, java.lang.Long userId) {
     this.aircraftId = aircraftId;
     this.altitude = altitude;
     this.latitude = latitude;
@@ -127,7 +127,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: aircraftId = (java.lang.Long)value$; break;
-    case 1: altitude = (java.lang.Float)value$; break;
+    case 1: altitude = (java.lang.Integer)value$; break;
     case 2: latitude = (java.lang.Double)value$; break;
     case 3: longitude = (java.lang.Double)value$; break;
     case 4: heading = (java.lang.Float)value$; break;
@@ -158,7 +158,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'altitude' field.
    * @return The value of the 'altitude' field.
    */
-  public float getAltitude() {
+  public int getAltitude() {
     return altitude;
   }
 
@@ -167,7 +167,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
    * Sets the value of the 'altitude' field.
    * @param value the value to set.
    */
-  public void setAltitude(float value) {
+  public void setAltitude(int value) {
     this.altitude = value;
   }
 
@@ -298,7 +298,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
     implements org.apache.avro.data.RecordBuilder<Position> {
 
     private long aircraftId;
-    private float altitude;
+    private int altitude;
     private double latitude;
     private double longitude;
     private float heading;
@@ -425,7 +425,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * Gets the value of the 'altitude' field.
       * @return The value.
       */
-    public float getAltitude() {
+    public int getAltitude() {
       return altitude;
     }
 
@@ -435,7 +435,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'altitude'.
       * @return This builder.
       */
-    public com.supersidor.flightmap.avro.Position.Builder setAltitude(float value) {
+    public com.supersidor.flightmap.avro.Position.Builder setAltitude(int value) {
       validate(fields()[1], value);
       this.altitude = value;
       fieldSetFlags()[1] = true;
@@ -661,7 +661,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
       try {
         Position record = new Position();
         record.aircraftId = fieldSetFlags()[0] ? this.aircraftId : (java.lang.Long) defaultValue(fields()[0]);
-        record.altitude = fieldSetFlags()[1] ? this.altitude : (java.lang.Float) defaultValue(fields()[1]);
+        record.altitude = fieldSetFlags()[1] ? this.altitude : (java.lang.Integer) defaultValue(fields()[1]);
         record.latitude = fieldSetFlags()[2] ? this.latitude : (java.lang.Double) defaultValue(fields()[2]);
         record.longitude = fieldSetFlags()[3] ? this.longitude : (java.lang.Double) defaultValue(fields()[3]);
         record.heading = fieldSetFlags()[4] ? this.heading : (java.lang.Float) defaultValue(fields()[4]);
@@ -701,7 +701,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
   {
     out.writeLong(this.aircraftId);
 
-    out.writeFloat(this.altitude);
+    out.writeInt(this.altitude);
 
     out.writeDouble(this.latitude);
 
@@ -722,7 +722,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
     if (fieldOrder == null) {
       this.aircraftId = in.readLong();
 
-      this.altitude = in.readFloat();
+      this.altitude = in.readInt();
 
       this.latitude = in.readDouble();
 
@@ -742,7 +742,7 @@ public class Position extends org.apache.avro.specific.SpecificRecordBase implem
           break;
 
         case 1:
-          this.altitude = in.readFloat();
+          this.altitude = in.readInt();
           break;
 
         case 2:

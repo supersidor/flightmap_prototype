@@ -9,7 +9,7 @@
     },
     {
       "name": "altitude",
-      "type": "float"
+      "type": "int"
     },
     {
       "name": "latitude",
