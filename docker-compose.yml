@@ -4,7 +4,7 @@ networks:
     driver: bridge
 services:
   zookeeper:
-    image: 'bitnami/zookeeper:latest'
+    image: 'bitnami/zookeeper:3.6.2'
     networks:
       - flightmap-network
     ports:
@@ -14,7 +14,7 @@ services:
     volumes:
       - '../docker_volumes/zookeeper:/bitnami/zookeeper'
   kafka-1:
-    image: 'bitnami/kafka:latest'
+    image: 'bitnami/kafka:2.6.0'
     networks:
       - flightmap-network
     ports:
@@ -30,7 +30,7 @@ services:
     volumes:
       - '../docker_volumes/kafka-1:/bitnami/kafka'
   kafka-2:
-    image: 'bitnami/kafka:latest'
+    image: 'bitnami/kafka:2.6.0'
     networks:
       - flightmap-network
     ports:
@@ -47,7 +47,7 @@ services:
       - '../docker_volumes/kafka-2:/bitnami/kafka'
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:latest
+    image: confluentinc/cp-schema-registry:5.5.1
     hostname: schema-registry
     networks:
       - flightmap-network
@@ -62,7 +62,7 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181"
 
   postgres:
-    image: postgres
+    image: postgres:13
     networks:
       - flightmap-network
     environment:
