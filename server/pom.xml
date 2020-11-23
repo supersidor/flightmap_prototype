@@ -23,7 +23,7 @@
 	</repositories>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>15</java.version>
 		<avro-maven-plugin.version>1.9.2</avro-maven-plugin.version>
 	</properties>
 
@@ -80,12 +80,6 @@
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
 			<version>2.5.5.RELEASE</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.confluent</groupId>
-			<artifactId>kafka-avro-serializer</artifactId>
-			<version>5.5.1</version>
 		</dependency>
 
 		<dependency>
@@ -155,8 +149,6 @@
 
 	<build>
 		<plugins>
-
-
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -205,14 +197,22 @@
 							<goal>schema</goal>
 						</goals>
 						<configuration>
-							<sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>
+							<sourceDirectory>${project.basedir}/src/main/resources/avro/schemas/</sourceDirectory>
 							<outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
 							<stringType>String</stringType>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-		</plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>15</source>
+                    <target>15</target>
+                </configuration>
+            </plugin>
+        </plugins>
 	</build>
 
 </project>

@@ -1,13 +1,12 @@
 package com.supersidor.flightmap.service;
 
-import com.supersidor.flightmap.avro.Position;
+import com.supersidor.flightmap.avro.schemas.Position;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @Slf4j

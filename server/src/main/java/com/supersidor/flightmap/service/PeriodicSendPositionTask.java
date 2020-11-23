@@ -1,11 +1,9 @@
 package com.supersidor.flightmap.service;
 
-import com.supersidor.flightmap.service.CurrentPositionService;
-import com.supersidor.flightmap.avro.Position;
+import com.supersidor.flightmap.avro.schemas.Position;
 import com.supersidor.flightmap.websocket.WebSocketPosition;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 

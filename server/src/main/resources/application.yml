@@ -2,7 +2,7 @@ server:
   port: 8080
 kafka:
   topic:
-    position: position6
+    position: position2
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
@@ -30,15 +30,13 @@ spring:
               - read:user
   kafka:
     bootstrap-servers: localhost:9092
-    properties:
-      schema.registry.url: http://localhost:8081
     producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: com.supersidor.flightmap.kafka.PositionSerializer
       compression-type: gzip
     consumer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+      value-deserializer: com.supersidor.flightmap.kafka.PositionDeserializer
       auto-offset-reset: earliest
       enable-auto-commit: false
       properties:

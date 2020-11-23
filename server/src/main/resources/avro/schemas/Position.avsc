@@ -1,0 +1,31 @@
+{
+  "type": "record",
+  "name": "Position",
+  "namespace": "com.supersidor.flightmap.avro.schemas",
+  "fields": [
+    {
+      "name": "aircraftId",
+      "type": "long"
+    },
+    {
+      "name": "altitude",
+      "type": "int"
+    },
+    {
+      "name": "latitude",
+      "type": "double"
+    },
+    {
+      "name": "longitude",
+      "type": "double"
+    },
+    {
+      "name": "heading",
+      "type": "float"
+    },
+    {
+      "name": "timestamp",
+      "type": "long"
+    }
+  ]
+}

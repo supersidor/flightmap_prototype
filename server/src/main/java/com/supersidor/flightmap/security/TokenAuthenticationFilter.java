@@ -34,10 +34,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 Long userId = tokenProvider.getUserIdFromToken(jwt);
 
-                long start = System.currentTimeMillis();
+                // start = System.currentTimeMillis();
                 UserDetails userDetails = customUserDetailsService.loadUserById(userId);
-                long duration =  System.currentTimeMillis() - start;
-                logger.info("duration: {} ",duration);
+                //long duration =  System.currentTimeMillis() - start;
+                //logger.info("duration: {} ",duration);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 

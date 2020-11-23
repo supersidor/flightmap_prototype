@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 /web/src/main/web/node/
+/server/src/main/java/com/supersidor/flightmap/avro/schemas/
