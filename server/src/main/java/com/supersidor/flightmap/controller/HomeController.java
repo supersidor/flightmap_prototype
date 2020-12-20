@@ -13,13 +13,13 @@ import java.util.Map;
 @Controller
 @Slf4j
 public class HomeController {
-    @RequestMapping(value = "/ui/**")
-    public String redirectUi() {
-        return "forward:/index.html";
-    }
-    @RequestMapping(value = "/")
-    public String redirectRoot() {
-        return "redirect:/ui/";
-    }
+//    @RequestMapping(value = "/ui/**")
+//    public String redirectUi() {
+//        return "forward:/index.html";
+//    }
+//    //@RequestMapping(value = "/")
+//    //public String redirectRoot() {
+//    //    return "redirect:/ui/";
+//    //}
 
 }

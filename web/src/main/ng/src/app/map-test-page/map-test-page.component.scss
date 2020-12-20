@@ -1,0 +1,58 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#map {
+  background-color: gray;
+  flex-grow: 1;
+}
+
+#hide-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 14;
+  padding: 0.5em;
+  color: black;
+  font-size: 1em;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+}
+#hide-hud:hover {
+  color: white;
+}
+
+#hud {
+  padding: 1em;
+  text-align: center;
+  color: white;
+  font-size: 1.5em;
+  background-color: black;
+}
+
+#hud span.field {
+  padding-right: 0.5em;
+}
+#hud span.value {
+  font-size: 2.0em;
+}
+#hud span.value_small {
+  font-size: 1.0em;
+  padding-left: 0.1em;
+}
+#teleport-popup p {
+  padding:0.2em;
+  margin: 0;
+  text-align: center;
+}
+#teleport-popup p label {
+  padding-right: 0.2em;
+}
