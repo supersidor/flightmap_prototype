@@ -24,9 +24,9 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>install node and npm</id>
+                        <id>install node and yarn</id>
                         <goals>
-                            <goal>install-node-and-npm</goal>
+                            <goal>install-node-and-yarn</goal>
                         </goals>
                     </execution>
                     <execution>
@@ -35,6 +35,7 @@
                             <goal>npm</goal>
                         </goals>
                     </execution>
+                    <!--
                     <execution>
                         <id>npm run build</id>
                         <goals>
@@ -53,7 +54,7 @@
                             <arguments>run-script build</arguments>
                         </configuration>
                         <phase>generate-resources</phase>
-                    </execution>
+                    </execution>-->
                 </executions>
             </plugin>
         </plugins>

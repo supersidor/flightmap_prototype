@@ -29,13 +29,19 @@ services:
       - zookeeper
     volumes:
       - '../docker_volumes/kafka-1:/bitnami/kafka'
-  postgres:
-    image: postgres:13
+  mongo:
+    image: mongo:4.4.2
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: flight
     networks:
       - flightmap-network
-    environment:
-      - POSTGRES_PASSWORD=mysecretpassword
     ports:
-      - 5432:5432
-    volumes:
-    - '../docker_volumes/postgres:/var/lib/postgresql/data'
+      - 27017:27017
+
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: example
+
+
+#    volumes:
+#    - '../docker_volumes/postgres:/var/lib/postgresql/data'

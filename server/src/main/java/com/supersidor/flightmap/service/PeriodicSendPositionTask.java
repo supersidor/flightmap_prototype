@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public class PeriodicSendPositionTask {
 
+    /*
     private static final String WS_MESSAGE_TRANSFER_DESTINATION = "/topic/position";
     private CurrentPositionService currentPositionService;
     private SimpMessagingTemplate simpMessagingTemplate;
@@ -32,5 +33,5 @@ public class PeriodicSendPositionTask {
         });
         //simpMessagingTemplate.convertAndSend(WS_MESSAGE_TRANSFER_DESTINATION,
         //        new Greeting("Hello, all!"));
-    }
+    } */
 }

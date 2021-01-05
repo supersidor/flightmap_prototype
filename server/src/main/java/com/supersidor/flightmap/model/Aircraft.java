@@ -1,29 +1,26 @@
 package com.supersidor.flightmap.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+//import javax.persistence.*;
+//import javax.validation.constraints.Email;
+//import javax.validation.constraints.NotNull;
 
 
-@Entity
-@Table(name = "aircrafts", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "name")
-})
+@Document(value="aircrafts")
 public class Aircraft {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String name;
 
-
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

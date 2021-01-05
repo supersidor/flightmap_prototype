@@ -3,48 +3,37 @@ server:
 kafka:
   topic:
     position: position2
+mongodb:
+  database: flight
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: mysecretpassword
-
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
   security:
     oauth2:
       client:
         registration:
           github:
-            clientId: 8a6800699899d685e5a5
-            clientSecret: b0c12cee1bd7b41f5e5a00762fd90a85c2a49853
-            redirectUri: "{baseUrl}/api/oauth2/callback/{registrationId}"
+            clientId: d21bebcaecf9b5c34da4
+            clientSecret: 54ae40bd5b33cbacc74db3de79e93308cba4b22e
+#            redirectUri: "{baseUrl}/api/oauth2/callback/{registrationId}"
             scope:
               - user:email
               - read:user
   kafka:
     bootstrap-servers: localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.LongSerializer
-      value-serializer: com.supersidor.flightmap.kafka.PositionSerializer
-      compression-type: gzip
-    consumer:
-      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
-      value-deserializer: com.supersidor.flightmap.kafka.PositionDeserializer
-      auto-offset-reset: earliest
-      enable-auto-commit: false
-      properties:
-        specific.avro.reader: true
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+#      value-serializer: com.supersidor.flightmap.kafka.PositionSerializer
+#      compression-type: gzip
+#    consumer:
+#      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+#      value-deserializer: com.supersidor.flightmap.kafka.PositionDeserializer
+#      auto-offset-reset: earliest
+#      enable-auto-commit: false
+#      properties:
+#        specific.avro.reader: true
 
-  cache:
-    jcache:
-      config: classpath:ehcache.xml
+#  cache:
+#    jcache:
+#      config: classpath:ehcache.xml
 app:
   auth:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC

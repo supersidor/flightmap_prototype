@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
+//@Service
 @Slf4j
 public class CurrentPositionService {
     volatile Position lastPosition = null;
