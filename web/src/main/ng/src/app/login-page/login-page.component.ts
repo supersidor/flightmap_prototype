@@ -10,7 +10,7 @@ import {ActivatedRoute} from "@angular/router";
 export class LoginPageComponent implements OnInit {
 
   constructor(private route:ActivatedRoute) { }
-  private static readonly OAUTH2_DEFAULT_REDIRECT_URI = window.location.origin+'/oauth2/redirect'
+  private static readonly OAUTH2_DEFAULT_REDIRECT_URI = window.location.origin+'/oauth2_result/redirect'
 
   redirectUrl = ''
   ngOnInit(): void {

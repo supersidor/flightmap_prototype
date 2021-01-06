@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', component:HomePageComponent, canActivate: [AuthGuard], pathMatch: 'full'},
   { path: 'login',component: LoginPageComponent },
   { path: 'maptest',component: MapTestPageComponent },
-  { path: 'oauth2/redirect',component: OAuthRedirectPageComponent },
+  { path: 'oauth2_result/redirect',component: OAuthRedirectPageComponent },
   { path: '**',component: PageNotFoundComponent },
 
 

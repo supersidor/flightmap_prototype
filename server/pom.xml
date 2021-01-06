@@ -143,6 +143,13 @@
 			<version>2.3.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>io.projectreactor.addons</groupId>
+			<artifactId>reactor-extra</artifactId>
+			<version>3.3.4.RELEASE</version>
+		</dependency>
+
+
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.security</groupId>-->
 <!--			<artifactId>spring-security-messaging</artifactId>-->

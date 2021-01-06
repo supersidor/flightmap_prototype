@@ -1,26 +1,27 @@
 package com.supersidor.flightmap.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-//import javax.persistence.*;
-//import javax.validation.constraints.Email;
-//import javax.validation.constraints.NotNull;
 
 
 @Document(value="aircrafts")
 public class Aircraft {
-    @Id
-    private String id;
+    @Transient
+    public static final String SEQUENCE_NAME = "aircrafts_sequence";
 
-    //@Column(nullable = false)
+    @Id
+    private Long id;
+
+    @Indexed(unique=true)
     private String name;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

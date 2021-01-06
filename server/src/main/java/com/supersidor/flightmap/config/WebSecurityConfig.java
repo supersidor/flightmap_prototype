@@ -114,6 +114,7 @@ public class WebSecurityConfig{
                     .anyExchange()
                         .authenticated()
                 .and()
+                //oauth2 -> oauth2.authenticationMatcher(new PathPatternParserServerWebExchangeMatcher("/login/oauth2/code/{registrationId}"))
                 .oauth2Login()
 //                   .authenticationMatcher(new ServerWebExchangeMatcher(){
 //

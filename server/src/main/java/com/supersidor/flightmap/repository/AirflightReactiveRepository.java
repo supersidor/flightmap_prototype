@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface AirflightReactiveRepository extends ReactiveMongoRepository<Aircraft, String> {
+public interface AirflightReactiveRepository extends ReactiveMongoRepository<Aircraft, Long> {
     Mono<Aircraft> findByName(final String name);
 }
