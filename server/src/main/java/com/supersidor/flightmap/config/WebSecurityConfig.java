@@ -5,6 +5,7 @@ package com.supersidor.flightmap.config;
 //import com.supersidor.flightmap.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
 //import com.supersidor.flightmap.security.oauth2.OAuth2AuthenticationFailureHandler;
 //import com.supersidor.flightmap.security.oauth2.OAuth2AuthenticationSuccessHandler;
+
 import com.supersidor.flightmap.config.oauth.CustomServerAuthorizationRequestRepository;
 import com.supersidor.flightmap.config.oauth.JwtAuthorizationFilter;
 import com.supersidor.flightmap.security.TokenProvider;
@@ -21,8 +22,11 @@ import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.ReactiveOAuth2UserService;
+import org.springframework.security.oauth2.client.web.server.DefaultServerOAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -50,24 +54,28 @@ import static com.supersidor.flightmap.config.oauth.OAuthConst.REDIRECT_URI_PARA
 //)
 @EnableWebFluxSecurity
 @Slf4j
-public class WebSecurityConfig{
+public class WebSecurityConfig {
 
     private CustomServerAuthorizationRequestRepository authorizationRequestRepository;
     private CookieUtility cookieUtility;
     private JwtAuthorizationFilter authFilter;
     private ReactiveOAuth2UserService<OAuth2UserRequest, OAuth2User> oauthUserService;
     private TokenProvider tokenProvider;
+    private ReactiveClientRegistrationRepository reactiveClientRegistrationRepository;
 
     public WebSecurityConfig(CustomServerAuthorizationRequestRepository authorizationRequestRepository,
                              CookieUtility cookieUtility,
-                             JwtAuthorizationFilter authFilter, ReactiveOAuth2UserService<OAuth2UserRequest, OAuth2User> oauthUserService, TokenProvider tokenProvider){
+                             JwtAuthorizationFilter authFilter,
+                             ReactiveOAuth2UserService<OAuth2UserRequest, OAuth2User> oauthUserService,
+                             TokenProvider tokenProvider,
+                             ReactiveClientRegistrationRepository reactiveClientRegistrationRepository) {
         this.authorizationRequestRepository = authorizationRequestRepository;
         this.cookieUtility = cookieUtility;
         this.authFilter = authFilter;
         this.oauthUserService = oauthUserService;
         this.tokenProvider = tokenProvider;
+        this.reactiveClientRegistrationRepository = reactiveClientRegistrationRepository;
     }
-
 
 
     @Bean
@@ -134,7 +142,7 @@ public class WebSecurityConfig{
 //                        return null;
 //                    }
 //                })
-                .authenticationSuccessHandler(new ServerAuthenticationSuccessHandler(){
+                .authenticationSuccessHandler(new ServerAuthenticationSuccessHandler() {
                     @Override
                     public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
                         if (authentication instanceof OAuth2AuthenticationToken) {
@@ -216,13 +224,15 @@ public class WebSecurityConfig{
                         } else return Mono.empty();
                     }
                 })
-                .authorizationRequestRepository(authorizationRequestRepository).and();
+                .authorizationRequestRepository(authorizationRequestRepository)
+                .authorizationRequestResolver(getAuthorizationRequestResolver());
+        //.authenticationMatcher(new PathPatternParserServerWebExchangeMatcher("/api/oauth2/callback/{registrationId}")).and();
 
 //                .and()
 //                .build();
 
-            http.addFilterBefore(authFilter, SecurityWebFiltersOrder.HTTP_BASIC);
-            return http.build();
+        http.addFilterBefore(authFilter, SecurityWebFiltersOrder.HTTP_BASIC);
+        return http.build();
 
 //                .oauth2Login()
 //                .authorizationEndpoint()
@@ -239,7 +249,7 @@ public class WebSecurityConfig{
 //                .failureHandler(oAuth2AuthenticationFailureHandler);
     }
 
-//    private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+    //    private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 //
 //    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 //
@@ -250,7 +260,13 @@ public class WebSecurityConfig{
 //        this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
 //        this.customOAuth2UserService = customOAuth2UserService;
 //    }
-
+    private ServerOAuth2AuthorizationRequestResolver getAuthorizationRequestResolver() {
+        return new DefaultServerOAuth2AuthorizationRequestResolver(
+                this.reactiveClientRegistrationRepository,
+                new PathPatternParserServerWebExchangeMatcher(
+                        "/api/oauth2/authorize/{registrationId}"));
+//getClientRegistrationRepository
+    }
 
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
