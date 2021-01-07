@@ -225,7 +225,8 @@ public class WebSecurityConfig {
                     }
                 })
                 .authorizationRequestRepository(authorizationRequestRepository)
-                .authorizationRequestResolver(getAuthorizationRequestResolver());
+                .authorizationRequestResolver(getAuthorizationRequestResolver())
+                .authenticationMatcher(new PathPatternParserServerWebExchangeMatcher("/api/oauth2/callback/{registrationId}"));
         //.authenticationMatcher(new PathPatternParserServerWebExchangeMatcher("/api/oauth2/callback/{registrationId}")).and();
 
 //                .and()

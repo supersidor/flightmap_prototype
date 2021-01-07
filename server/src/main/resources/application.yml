@@ -16,7 +16,7 @@ spring:
           github:
             clientId: d21bebcaecf9b5c34da4
             clientSecret: 54ae40bd5b33cbacc74db3de79e93308cba4b22e
-#            redirectUri: "{baseUrl}/api/oauth2/callback/{registrationId}"
+            redirectUri: "{baseUrl}/api/oauth2/callback/{registrationId}"
             scope:
               - user:email
               - read:user
