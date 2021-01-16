@@ -6,13 +6,12 @@ import com.supersidor.flightmap.security.TokenProvider;
 import com.supersidor.flightmap.security.UserPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
@@ -38,16 +37,39 @@ public class JwtAuthorizationFilter implements WebFilter {
 
     private static final Logger log = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
     private static final String TOKEN_PREFIX = "Bearer ";
+    private static final String HEADER_UPGRADE = "Upgrade";
+    private static final String HEADER_UPGRADE_WEBSOCKET = "websocket";
+    private static final String QUERY_TOKEN = "token";
 
     @Override
     public Mono<Void> filter(ServerWebExchange serverWebExchange, WebFilterChain webFilterChain) {
         log.info("Request {} called", serverWebExchange.getRequest().getPath().value());
-        String authorizationHeader = serverWebExchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+        String jwt = null;
 
-        if (StringUtils.isEmpty(authorizationHeader) || !(authorizationHeader.startsWith(TOKEN_PREFIX))) {
-            return webFilterChain.filter(serverWebExchange);
+        final HttpHeaders headers = serverWebExchange.getRequest().getHeaders();
+        String authorizationHeader = headers.getFirst(HttpHeaders.AUTHORIZATION);
+        if (!StringUtils.isEmpty(authorizationHeader) && (authorizationHeader.startsWith(TOKEN_PREFIX))) {
+            jwt = authorizationHeader.substring(TOKEN_PREFIX.length());
         }
-        final String jwt = authorizationHeader.substring(TOKEN_PREFIX.length());
+        //if (queryParams.containsKey(""))
+
+        final String upgradeValue = headers.getFirst(HEADER_UPGRADE);
+        if (!StringUtils.isEmpty(upgradeValue)) {
+            if (upgradeValue.equals(HEADER_UPGRADE_WEBSOCKET)){
+                final MultiValueMap<String, String> queryParams = serverWebExchange.getRequest().getQueryParams();
+                jwt = queryParams.getFirst(QUERY_TOKEN);
+            }
+
+        }
+
+//        String webSocketProtocolAsJwt = headers.getFirst(WEBSOCKET_PROTOCOL);
+//        if (!StringUtils.isEmpty(webSocketProtocolAsJwt)) {
+//            jwt = webSocketProtocolAsJwt;
+//        }
+
+        if (jwt==null)
+            return webFilterChain.filter(serverWebExchange);
+
 
         if (!StringUtils.hasText(jwt) || !tokenProvider.validateToken(jwt)) {
             return webFilterChain.filter(serverWebExchange);
