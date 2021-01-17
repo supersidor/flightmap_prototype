@@ -16,10 +16,10 @@ export class HomePageComponent implements OnInit {
   user:User;
 
   ngOnInit(): void {
-    // this.userService.getCurrentUser().subscribe( user => {
-    //   console.log(user)
-    //   this.user = user;
-    // });
+    this.userService.getCurrentUser().subscribe( user => {
+      console.log(user)
+      this.user = user;
+    });
     let subject = webSocket('ws://localhost:8080/ws?token='+this.auth.getToken());
 
     subject.subscribe(
@@ -27,22 +27,6 @@ export class HomePageComponent implements OnInit {
       err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
       () => console.log('complete') // Called when connection is closed (for whatever reason).
     );
-    //let socket = new WebSocket('ws://localhost:8080/console?token='+this.auth.getToken());
-// Connection opened
-//     socket.addEventListener('open', function (event) {
-//        console.log("Channel is opened ")
-//        //socket.send('Hello Server!');
-//     });
-//
-//     socket.addEventListener('close', function (event) {
-//       console.log("Channel is closed ")
-//       //socket.send('Hello Server!');
-//     });
-//
-// // Listen for messages
-//     socket.addEventListener('message', function (event) {
-//          console.log('Message from server ', event);
-//     });
 
   }
 

@@ -9,6 +9,7 @@ package com.supersidor.flightmap.config;
 import com.supersidor.flightmap.config.oauth.CustomServerAuthorizationRequestRepository;
 import com.supersidor.flightmap.config.oauth.JwtAuthorizationFilter;
 import com.supersidor.flightmap.security.TokenProvider;
+import com.supersidor.flightmap.security.UserPrincipal;
 import com.supersidor.flightmap.util.CookieUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -117,6 +118,7 @@ public class WebSecurityConfig {
                         "/login/**",
                         "/test/**",
                         "/api/oauth2/**",
+                        "/api/test/**",
                         "/static/**")
                         .permitAll()
                     .anyExchange()
@@ -161,7 +163,9 @@ public class WebSecurityConfig {
                                 return Mono.empty();
                             }
 
-                            String token = tokenProvider.createToken(authentication);
+                            UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
+                            String token = tokenProvider.createToken(userPrincipal.getId());
 
                             String location = null;
                             try {

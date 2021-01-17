@@ -11,6 +11,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenInterceptor} from "./token.interceptor";
 import {AuthService} from "./auth.service";
 import { MapTestPageComponent } from './map-test-page/map-test-page.component';
+import { MapComponent } from './map/map.component';
 
 export function initializeAuth(auth: AuthService) {
    return () => {
@@ -25,7 +26,8 @@ export function initializeAuth(auth: AuthService) {
     OAuthRedirectPageComponent,
     HomePageComponent,
     PageNotFoundComponent,
-    MapTestPageComponent
+    MapTestPageComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

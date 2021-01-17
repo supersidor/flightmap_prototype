@@ -1,9 +1,9 @@
 package com.supersidor.flightmap.config.oauth;
 
 import com.supersidor.flightmap.exception.ResourceNotFoundException;
-import com.supersidor.flightmap.repository.UserReactiveRepository;
 import com.supersidor.flightmap.security.TokenProvider;
 import com.supersidor.flightmap.security.UserPrincipal;
+import com.supersidor.flightmap.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -20,17 +20,11 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class JwtAuthorizationFilter implements WebFilter {
-
-//    @Value("${jwt.TOKEN_PREFIX}")
-//    private String TOKEN_PREFIX;
-
-    //    @Autowired
-//    private JwtTokenUtility jwtTokenUtility;
-    private UserReactiveRepository userRepository;
+    private UserService userService;
     private TokenProvider tokenProvider;
 
-    public JwtAuthorizationFilter(UserReactiveRepository userRepository, TokenProvider tokenProvider) {
-        this.userRepository = userRepository;
+    public JwtAuthorizationFilter(UserService userService, TokenProvider tokenProvider) {
+        this.userService = userService;
         this.tokenProvider = tokenProvider;
     }
 
@@ -43,7 +37,7 @@ public class JwtAuthorizationFilter implements WebFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange serverWebExchange, WebFilterChain webFilterChain) {
-        log.info("Request {} called", serverWebExchange.getRequest().getPath().value());
+        //log.info("Request {} called", serverWebExchange.getRequest().getPath().value());
         String jwt = null;
 
         final HttpHeaders headers = serverWebExchange.getRequest().getHeaders();
@@ -74,39 +68,20 @@ public class JwtAuthorizationFilter implements WebFilter {
         if (!StringUtils.hasText(jwt) || !tokenProvider.validateToken(jwt)) {
             return webFilterChain.filter(serverWebExchange);
 
-//            // start = System.currentTimeMillis();
-//            UserDetails userDetails = customUserDetailsService.loadUserById(userId);
-//            //long duration =  System.currentTimeMillis() - start;
-//            //logger.info("duration: {} ",duration);
-//            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         Long userId = tokenProvider.getUserIdFromToken(jwt);
 
-        return userRepository.findById(userId)
+        return userService.findById(userId)
                 .switchIfEmpty(Mono.error(new ResourceNotFoundException("User", "id", userId)))
                 .map(user -> UserPrincipal.create(user))
                 .map(principal -> new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities()))
                 .flatMap(auth -> {
-                    log.info("setting the reactive context");
+                    //log.info("setting the reactive context");
                     return webFilterChain.filter(serverWebExchange).subscriberContext(c -> ReactiveSecurityContextHolder.withAuthentication(auth)).onErrorResume(AuthenticationException.class, e -> {
                         log.error("Authentication Exception", e);
                         return webFilterChain.filter(serverWebExchange);
                     });
                 });
-
-
-//        return jwtTokenUtility.getUsernamePasswordAuthenticationTokenFromJwt(authorizationHeader).flatMap(auth -> {
-//            log.info("setting the reactive context");
-//
-//            return webFilterChain.filter(serverWebExchange).subscriberContext(c -> ReactiveSecurityContextHolder.withAuthentication(auth)).onErrorResume(AuthenticationException.class, e -> {
-//                log.error("Authentication Exception", e);
-//                return webFilterChain.filter(serverWebExchange);
-//            });
-//
-//        });
     }
 }
 /*

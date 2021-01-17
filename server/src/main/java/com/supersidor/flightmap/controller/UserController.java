@@ -1,16 +1,12 @@
 package com.supersidor.flightmap.controller;
 
 import com.supersidor.flightmap.exception.ResourceNotFoundException;
-import com.supersidor.flightmap.model.AuthProvider;
 import com.supersidor.flightmap.model.User;
 //import com.supersidor.flightmap.repository.UserRepository;
 //import com.supersidor.flightmap.security.UserPrincipal;
-import com.supersidor.flightmap.repository.UserReactiveRepository;
 import com.supersidor.flightmap.security.UserPrincipal;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import com.supersidor.flightmap.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +16,12 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api/user")
 public class UserController {
 
-    private UserReactiveRepository userRepository;
+    private UserService userService;
 
-    public UserController(UserReactiveRepository userRepository){
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
+
 
 //    @Autowired
 //    private UserRepository userRepository;
@@ -51,7 +48,7 @@ public class UserController {
     @GetMapping("/me")
     public Mono<User> getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
 
-        return userRepository
+        return userService
                 .findById(userPrincipal.getId())
                 .switchIfEmpty(Mono.error( new ResourceNotFoundException("User", "id", userPrincipal.getId())));
 

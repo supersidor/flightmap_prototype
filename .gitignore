@@ -33,3 +33,6 @@ build/
 .vscode/
 /web/src/main/web/node/
 /server/src/main/java/com/supersidor/flightmap/avro/schemas/
+/stresstest/node_modules/
+/stresstest/dist/
+/node_modules/@types/node/

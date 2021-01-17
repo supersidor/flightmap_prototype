@@ -11,8 +11,8 @@ services:
       - '2181:2181'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
-    volumes:
-      - '../docker_volumes/zookeeper:/bitnami/zookeeper'
+#    volumes:
+#      - '../docker_volumes/zookeeper:/bitnami/zookeeper'
   kafka-1:
     image: 'bitnami/kafka:2.6.0'
     networks:
@@ -22,13 +22,13 @@ services:
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${KAFKA_HOST_NAME}:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper
-    volumes:
-      - '../docker_volumes/kafka-1:/bitnami/kafka'
+#    volumes:
+#      - '../docker_volumes/kafka-1:/bitnami/kafka'
   mongo:
     image: mongo:4.4.2
     restart: always
