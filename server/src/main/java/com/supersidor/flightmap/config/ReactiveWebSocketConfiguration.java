@@ -24,6 +24,10 @@ public class ReactiveWebSocketConfiguration {
     @Qualifier("ReactiveWebSocketHandler")
     private WebSocketHandler webSocketHandler;
 
+    @Autowired
+    @Qualifier("ConsoleWebSocketHandler")
+    private WebSocketHandler consoleWebSocketHandler;
+
     @Bean
     public HandlerMapping webSocketHandlerMapping() {
         Map<String, WebSocketHandler> map = new HashMap<>();
@@ -35,6 +39,16 @@ public class ReactiveWebSocketConfiguration {
         return handlerMapping;
     }
 
+    @Bean
+    public HandlerMapping webSocketConsoleHandlerMapping() {
+        Map<String, WebSocketHandler> map = new HashMap<>();
+        map.put("/console", consoleWebSocketHandler);
+
+        SimpleUrlHandlerMapping handlerMapping = new SimpleUrlHandlerMapping();
+        handlerMapping.setOrder(1);
+        handlerMapping.setUrlMap(map);
+        return handlerMapping;
+    }
     @Bean
     public WebSocketHandlerAdapter handlerAdapter() {
         return new WebSocketHandlerAdapter();
