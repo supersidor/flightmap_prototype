@@ -3,6 +3,7 @@ import {UserService} from "../user.service";
 import {User} from "../user";
 import {AuthService} from "../auth.service";
 import {webSocket} from "rxjs/webSocket";
+import {PlanePosition} from "@model/position";
 
 @Component({
   selector: 'app-home-page',
@@ -20,10 +21,10 @@ export class HomePageComponent implements OnInit {
       console.log(user)
       this.user = user;
     });
-    let subject = webSocket('ws://localhost:8080/ws?token='+this.auth.getToken());
+    let subject = webSocket<PlanePosition>('ws://localhost:8080/ws?token='+this.auth.getToken());
 
     subject.subscribe(
-      msg => console.log('message received: ',msg), // Called whenever there is a message from the server.
+      position => console.log('position received: ',position), // Called whenever there is a message from the server.
       err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
       () => console.log('complete') // Called when connection is closed (for whatever reason).
     );

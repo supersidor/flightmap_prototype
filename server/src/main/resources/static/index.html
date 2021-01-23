@@ -113,21 +113,21 @@
     }
 
     function updateMap(msg) {
-      var pos = L.latLng(msg.latitude, msg.longitude);
-      marker.setLatLng(pos);
-      marker.setRotationAngle(msg.heading);
-
-      plane_popup.pos.innerText = Number(pos.lat).toFixed(6) + "," + Number(pos.lng).toFixed(6);
-      //plane_popup.gmap.innerHTML = "<a href=\"https://www.google.com/maps/@" + pos.lat + "," + pos.lng + "," + map.getZoom() + "z\">google maps</a>";
-
-      if (follow_plane) {
-        map.panTo(pos);
-      }
+      // var pos = L.latLng(msg.latitude, msg.longitude);
+      // marker.setLatLng(pos);
+      // marker.setRotationAngle(msg.heading);
+      //
+      // plane_popup.pos.innerText = Number(pos.lat).toFixed(6) + "," + Number(pos.lng).toFixed(6);
+      // //plane_popup.gmap.innerHTML = "<a href=\"https://www.google.com/maps/@" + pos.lat + "," + pos.lng + "," + map.getZoom() + "z\">google maps</a>";
+      //
+      // if (follow_plane) {
+      //   map.panTo(pos);
+      // }
     }
 
     function updateHUD(msg) {
-      hud.altitude.innerText = msg.altitude;
-      hud.heading.innerText = msg.heading;
+      // hud.altitude.innerText = msg.altitude;
+      // hud.heading.innerText = msg.heading;
       //hud.airspeed.innerText = msg.airspeed;
       //hud.vertical_speed.innerText = msg.vertical_speed;
       //hud.airspeed_true.innerText = "(" + msg.airspeed_true + ")";
@@ -137,36 +137,36 @@
     }
   //window.location.port
 
-    var stompClient = null;
-    function connect() {
-
-      let socket = new WebSocket('ws://localhost:8080/ws');
-      stompClient = Stomp.over(socket);
-      stompClient.connect({'Authentication': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjAyMDY5MzA5LCJleHAiOjE2MDI5MzMzMDl9.T8o7x8DOfLePW-4Li1oIcOl9hdjl2lgLfeofd6xBdDy91G69dYdvqBe-AqpblXWHiE8plGwAVdAtke54s16VeA'}, function (frame) {
-        console.log('Connected: ' + frame);
-        // /user
-        stompClient.subscribe('/topic/position', function (greeting) {
-          //console.log(JSON.parse(greeting.body).content);
-          var msg = JSON.parse(greeting.body);
-          last_report = msg;
-          updateHUD(msg);
-          if (map !== undefined) {
-            updateMap(msg);
-          }
-        });
-      });
-    }
-
-
-
-
-    function disconnect() {
-      if (stompClient !== null) {
-        stompClient.disconnect();
-      }
-      console.log("Disconnected");
-    }
-    connect();
+    // var stompClient = null;
+    // function connect() {
+    //
+    //   let socket = new WebSocket('ws://localhost:8080/ws');
+    //   stompClient = Stomp.over(socket);
+    //   stompClient.connect({'Authentication': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjAyMDY5MzA5LCJleHAiOjE2MDI5MzMzMDl9.T8o7x8DOfLePW-4Li1oIcOl9hdjl2lgLfeofd6xBdDy91G69dYdvqBe-AqpblXWHiE8plGwAVdAtke54s16VeA'}, function (frame) {
+    //     console.log('Connected: ' + frame);
+    //     // /user
+    //     stompClient.subscribe('/topic/position', function (greeting) {
+    //       //console.log(JSON.parse(greeting.body).content);
+    //       var msg = JSON.parse(greeting.body);
+    //       last_report = msg;
+    //       updateHUD(msg);
+    //       if (map !== undefined) {
+    //         updateMap(msg);
+    //       }
+    //     });
+    //   });
+    // }
+    //
+    //
+    //
+    //
+    // function disconnect() {
+    //   if (stompClient !== null) {
+    //     stompClient.disconnect();
+    //   }
+    //   console.log("Disconnected");
+    // }
+    // connect();
 
 
     function initMap() {
@@ -242,76 +242,82 @@
 
       marker = L.marker(pos, {
         icon: planeIconBlack,
-        rotationAngle: 0,
-        rotationOrigin: "center",
+        // rotationAngle: 0,
+        // rotationOrigin: "center",
       });
+      marker.setRotationAngle(0)
+      marker.setRotationOrigin("center")
+
+      marker.setLatLng(pos);
       marker.addTo(map);
-      marker.bindPopup(L.popup({autoPan: false}).setLatLng(pos).setContent(plane_popup.main));
+      // marker.bindPopup(L.popup({autoPan: false}).setLatLng(pos).setContent(plane_popup.main));
+      //
+      // var markerPos = L.latLng(0,0);
+      // markerTeleport = L.marker(markerPos, {});
+      // markerTeleport.addTo(map);
+      // markerTeleport.bindPopup(L.popup({autoPan: false}).setContent(teleport_popup.main));
+      // set_teleport_marker(markerPos);
 
-      var markerPos = L.latLng(0,0);
-      markerTeleport = L.marker(markerPos, {});
-      markerTeleport.addTo(map);
-      markerTeleport.bindPopup(L.popup({autoPan: false}).setContent(teleport_popup.main));
-      set_teleport_marker(markerPos);
+
+      // map.on('dragstart', function(e) {
+      //   follow_plane = true
+      //   toggle_follow();
+      // });
+      //
+      // map.on('click', function(e) {
+      //   set_teleport_marker(e.latlng);
+      // });
+
+      // map.on('baselayerchange', function(e) {
+      //   if (e.name == "Carto Dark (Night Mode)") {
+      //     marker.setIcon(planeIconWhite);
+      //   } else if (e.name == "Stamen Toner") {
+      //     marker.setIcon(planeIconGreen);
+      //   } else {
+      //     marker.setIcon(planeIconBlack);
+      //   }
+      // });
+      let heading = 0;
+      const interval = setInterval(function() {
+        heading = heading + 10;
+        marker.setRotationAngle(heading);
+      }, 1000);
 
 
-      map.on('dragstart', function(e) {
-        follow_plane = true
-        toggle_follow();
-      });
 
-      map.on('click', function(e) {
-        set_teleport_marker(e.latlng);
-      });
-
-      map.on('baselayerchange', function(e) {
-        if (e.name == "Carto Dark (Night Mode)") {
-          marker.setIcon(planeIconWhite);
-        } else if (e.name == "Stamen Toner") {
-          marker.setIcon(planeIconGreen);
-        } else {
-          marker.setIcon(planeIconBlack);
-        }
-      });
     }
 
-    function set_teleport_marker(latlng) {
-      markerTeleport.setLatLng(latlng);
-      teleport_popup.gps.value = latlng.lat.toFixed(8) + "," + latlng.lng.toFixed(8);
-      if (last_report.altitude) {
-        teleport_popup.altitude.value = last_report.altitude;
-      }
-    }
 
-    function teleport_here() {
-      //var pos = markerTeleport.getLatLng();
-      var msg = JSON.stringify(
-        {
-          "type": "teleport",
-          "lat": parseFloat(teleport_popup.gps.value.split(",")[0]),
-          "lng": parseFloat(teleport_popup.gps.value.split(",")[1]),
-          "altitude": parseFloat(teleport_popup.altitude.value) + 0.5,
-        }
-      );
-      console.log(msg);
-      ws.send(msg);
-    }
 
-    function toggle_follow() {
-      if (follow_plane) {
-        plane_popup.follow.innerText = "follow plane";
-      } else {
-        plane_popup.follow.innerText = "don't follow plane";
-      }
-      follow_plane = !follow_plane;
-    }
+    // function teleport_here() {
+    //   //var pos = markerTeleport.getLatLng();
+    //   var msg = JSON.stringify(
+    //     {
+    //       "type": "teleport",
+    //       "lat": parseFloat(teleport_popup.gps.value.split(",")[0]),
+    //       "lng": parseFloat(teleport_popup.gps.value.split(",")[1]),
+    //       "altitude": parseFloat(teleport_popup.altitude.value) + 0.5,
+    //     }
+    //   );
+    //   console.log(msg);
+    //   ws.send(msg);
+    // }
 
-    function hide_hud() {
-      var hud = document.getElementById("hud");
-      hud.style.display = "none";
-      hud = document.getElementById("hide-hud");
-      hud.style.display = "none";
-    }
+    // function toggle_follow() {
+    //   if (follow_plane) {
+    //     plane_popup.follow.innerText = "follow plane";
+    //   } else {
+    //     plane_popup.follow.innerText = "don't follow plane";
+    //   }
+    //   follow_plane = !follow_plane;
+    // }
+
+    // function hide_hud() {
+    //   var hud = document.getElementById("hud");
+    //   hud.style.display = "none";
+    //   hud = document.getElementById("hide-hud");
+    //   hud.style.display = "none";
+    // }
 
     document.addEventListener("DOMContentLoaded", function(event) {
       plane_popup = {
@@ -337,7 +343,7 @@
         rudder_trim: document.getElementById("rudder_trim_value"),
       };
 
-      toggle_follow();
+      //toggle_follow();
       initMap();
     });
   </script>

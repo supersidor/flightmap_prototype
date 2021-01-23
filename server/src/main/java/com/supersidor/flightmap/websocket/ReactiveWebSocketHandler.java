@@ -3,6 +3,7 @@ package com.supersidor.flightmap.websocket;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.supersidor.flightmap.security.UserPrincipal;
+import com.supersidor.flightmap.service.PositionReceiveService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -21,19 +22,26 @@ import static java.util.UUID.randomUUID;
 @Slf4j
 public class ReactiveWebSocketHandler implements WebSocketHandler {
 
+    private PositionReceiveService receiveService;
+
+    ReactiveWebSocketHandler(PositionReceiveService receiveService){
+
+        this.receiveService = receiveService;
+    }
+
     private static final ObjectMapper json = new ObjectMapper();
 
-    private Flux<String> eventFlux = Flux.generate(sink -> {
-        Event event = new Event(randomUUID().toString(), now().toString());
-        try {
-            sink.next(json.writeValueAsString(event));
-        } catch (JsonProcessingException e) {
-            sink.error(e);
-        }
-    });
-
-    private Flux<String> intervalFlux = Flux.interval(Duration.ofMillis(1000L))
-            .zipWith(eventFlux, (time, event) -> event);
+//    private Flux<String> eventFlux = Flux.generate(sink -> {
+//        Event event = new Event(randomUUID().toString(), now().toString());
+//        try {
+//            sink.next(json.writeValueAsString(event));
+//        } catch (JsonProcessingException e) {
+//            sink.error(e);
+//        }
+//    });
+//
+//    private Flux<String> intervalFlux = Flux.interval(Duration.ofMillis(1000L))
+//            .zipWith(eventFlux, (time, event) -> event);
 
     @Override
     public Mono<Void> handle(WebSocketSession webSocketSession) {
@@ -48,7 +56,11 @@ public class ReactiveWebSocketHandler implements WebSocketHandler {
         //webSocketSession.receive().
 //        return webSocketSession.getHandshakeInfo().getPrincipal();
 //        UsernamePasswordAuthenticationToken
-        return webSocketSession.send(intervalFlux
+        return webSocketSession.send(receiveService.receive()
+                .map(rec -> {
+
+                    new
+                })
                 .map(webSocketSession::textMessage))
                 .and(webSocketSession.receive()
                         .map(WebSocketMessage::getPayloadAsText).log());
