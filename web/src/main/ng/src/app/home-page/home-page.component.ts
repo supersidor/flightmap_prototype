@@ -21,7 +21,24 @@ export class HomePageComponent implements OnInit {
       console.log(user)
       this.user = user;
     });
-    let subject = webSocket<PlanePosition>('ws://localhost:8080/ws?token='+this.auth.getToken());
+    let subject = webSocket<PlanePosition>({
+      url:'ws://localhost:8080/ws?token='+this.auth.getToken(),
+      openObserver: {
+        next: (ev) => {
+          console.log("opened websocket",ev);
+        }
+      },
+      closeObserver: {
+        next: (ev) => {
+          console.log("close websocket",ev);
+        }
+      },
+      closingObserver: {
+        next: (ev) => {
+          console.log("closing websocket",ev);
+        }
+      }
+    });
 
     subject.subscribe(
       position => console.log('position received: ',position), // Called whenever there is a message from the server.

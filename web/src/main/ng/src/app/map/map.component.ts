@@ -4,18 +4,25 @@ import 'leaflet-rotatedmarker'
 import {webSocket} from "rxjs/webSocket";
 import {UserService} from "../user.service";
 import {AuthService} from "../auth.service";
+import {PlanePosition} from "@model/position";
+import {Marker} from "leaflet";
+import {mark} from "@angular/compiler-cli/src/ngtsc/perf/src/clock";
+import {Message} from "@model/message";
+import {MapBounds} from "@model/map-bounds";
+import {WebSocketSubject} from "rxjs/src/internal/observable/dom/WebSocketSubject";
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit , AfterViewInit{
-  private map;
+  private map:L.Map;
   private marker;
   private planeIconBlack;
   private planeIconWhite;
   private planeIconGreen;
   private markerTeleport;
+  private mapPlanes:Map<number,Marker> = new Map();
 
   constructor(private auth: AuthService) {
     let svgPlaneIconString = '<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" height="249.84" width="248.25" version="1.0"><metadata id="metadata9"/><path id="path5724" d="M 247.51404,152.40266 139.05781,71.800946 c 0.80268,-12.451845 1.32473,-40.256266 0.85468,-45.417599 -3.94034,-43.266462 -31.23018,-24.6301193 -31.48335,-5.320367 -0.0693,5.281361 -1.01502,32.598388 -1.10471,50.836622 L 0.2842717,154.37562 0,180.19575 l 110.50058,-50.48239 3.99332,80.29163 -32.042567,22.93816 -0.203845,16.89693 42.271772,-11.59566 0.008,0.1395 42.71311,10.91879 -0.50929,-16.88213 -32.45374,-22.39903 2.61132,-80.35205 111.35995,48.50611 -0.73494,-25.77295 z" fill-rule="evenodd" fill="__COLOR__"/></svg>'
@@ -37,18 +44,93 @@ export class MapComponent implements OnInit , AfterViewInit{
   ngOnInit(): void {
   }
 
+  processPosition(pos:PlanePosition){
+    console.log('position received: ',pos)
+
+    let marker = this.mapPlanes.get(pos.userId);
+    if (!marker){
+       marker = L.marker([pos.latitude,pos.longitude], {
+        icon: this.planeIconBlack,
+      });
+      // @ts-ignore
+      marker.setRotationOrigin("center")
+      // @ts-ignore
+      marker.setRotationAngle(pos.heading)
+      marker.addTo(this.map)
+      this.mapPlanes.set(pos.userId,marker);
+    }else{
+      marker.setLatLng([pos.latitude,pos.longitude]);
+      // @ts-ignore
+      marker.setRotationAngle(pos.heading)
+    }
+
+
+    // this.marker = L.marker(pos, {
+    //   icon: this.planeIconBlack,
+    //   // rotationAngle: 0,
+    //   // rotationOrigin: "center",
+    // });
+    // //debugger;
+    // this.marker.setRotationAngle(0)
+    // //this.marker.setRotationOrigin("center")
+    // //
+    //  this.marker.setLatLng(pos);
+    //  this.marker.addTo(this.map);
+
+
+
+  }
+
   ngAfterViewInit(): void {
 
     this.initMap();
 
-    let subject = webSocket('ws://localhost:8080/ws?token='+this.auth.getToken());
+    // @ts-ignore
+    let subject:WebSocketSubject<Message> = webSocket<Message>({
+      url:'ws://localhost:8080/ws?token='+this.auth.getToken(),
+      openObserver: {
+        next: (ev) => {
+          console.log("opened websocket",ev);
+        }
+      },
+      closeObserver: {
+        next: (ev) => {
+          console.log("close websocket",ev);
+        }
+      },
+      closingObserver: {
+        next: (ev) => {
+          console.log("closing websocket",ev);
+        }
+      }
+    });
+
+
 
     subject.subscribe(
-      msg => console.log('message received: ',msg), // Called whenever there is a message from the server.
-      err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
+      msg => {
+        switch (msg.type){
+          case "pos":
+            this.processPosition(<PlanePosition>msg.body);
+        }
+      }, // Called whenever there is a message from the server.
+          err => console.log(err)
+      , // Called if at any point WebSocket API signals some kind of error.
       () => console.log('complete') // Called when connection is closed (for whatever reason).
     );
+    this.sendMapBounds(subject);
+    this.map.on("moveend", () =>  this.sendMapBounds(subject));
 
+  }
+  sendMapBounds(subject:WebSocketSubject<Message>){
+    let northWest = this.map.getBounds().getNorthWest();
+    let southEast = this.map.getBounds().getSouthEast();
+    let bounds = new MapBounds(northWest,southEast);
+    console.log("bounds",bounds);
+    subject.next({
+      type:'bounds',
+      body: bounds
+    });
   }
 
   initMap() {
@@ -125,17 +207,17 @@ export class MapComponent implements OnInit , AfterViewInit{
     //const marker = L.marker(pos).addTo(this.map);
 
 
-    this.marker = L.marker(pos, {
-      icon: this.planeIconBlack,
-      // rotationAngle: 0,
-      // rotationOrigin: "center",
-    });
-    //debugger;
-    this.marker.setRotationAngle(0)
-    //this.marker.setRotationOrigin("center")
-    //
-     this.marker.setLatLng(pos);
-     this.marker.addTo(this.map);
+    // this.marker = L.marker(pos, {
+    //   icon: this.planeIconBlack,
+    //   // rotationAngle: 0,
+    //   // rotationOrigin: "center",
+    // });
+    // //debugger;
+    // this.marker.setRotationAngle(0)
+    // //this.marker.setRotationOrigin("center")
+    // //
+    //  this.marker.setLatLng(pos);
+    //  this.marker.addTo(this.map);
     // marker.bindPopup(L.popup({autoPan: false}).setLatLng(pos).setContent(plane_popup.main));
     //
     // var markerPos = L.latLng(0,0);

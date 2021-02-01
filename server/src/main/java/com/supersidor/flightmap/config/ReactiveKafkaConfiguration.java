@@ -22,7 +22,7 @@ public class ReactiveKafkaConfiguration {
     @Bean
     Map<String, Object> kafkaConsumerConfiguration() {
         Map<String, Object> configuration = new HashMap<>();
-        configuration.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafkaUrl");
+        configuration.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
         configuration.put(ConsumerConfig.GROUP_ID_CONFIG, "groupId");
         configuration.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
         return configuration;

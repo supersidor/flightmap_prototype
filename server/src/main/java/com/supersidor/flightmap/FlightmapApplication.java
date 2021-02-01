@@ -4,6 +4,7 @@ import com.supersidor.flightmap.config.AppProperties;
 import com.supersidor.flightmap.controller.AircraftController;
 import com.supersidor.flightmap.controller.SimControllerTest;
 import com.supersidor.flightmap.repository.AirflightReactiveRepository;
+import com.supersidor.flightmap.service.PositionReceiveService;
 import com.supersidor.flightmap.service.SequenceGeneratorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,28 +28,40 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 @EnableConfigurationProperties(AppProperties.class)
 @Slf4j
 @EnableReactiveMongoRepositories
-public class FlightmapApplication{
+public class FlightmapApplication {
 
-	private AirflightReactiveRepository repository;
-	private SequenceGeneratorService sequenceGeneratorService;
-	private AircraftController controller;
+    private PositionReceiveService receiveService;
+    private AirflightReactiveRepository repository;
+    private SequenceGeneratorService sequenceGeneratorService;
+    private AircraftController controller;
 
-	public FlightmapApplication(AirflightReactiveRepository repository, SequenceGeneratorService sequenceGeneratorService) {
-		this.repository = repository;
-		this.sequenceGeneratorService = sequenceGeneratorService;
-		this.controller = new AircraftController(this.repository,this.sequenceGeneratorService);
-	}
+    public FlightmapApplication(PositionReceiveService receiveService, AirflightReactiveRepository repository, SequenceGeneratorService sequenceGeneratorService) {
+        this.receiveService = receiveService;
+        this.repository = repository;
+        this.sequenceGeneratorService = sequenceGeneratorService;
+        this.controller = new AircraftController(this.repository, this.sequenceGeneratorService);
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(FlightmapApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FlightmapApplication.class, args);
+    }
 
-	@Autowired
-	SimControllerTest test;
-	@Bean
-	CommandLineRunner runner(){
-		return (args)->{
-			log.info("Application started");
+    @Autowired
+    SimControllerTest test;
+
+    @Bean
+    CommandLineRunner runner() {
+        return (args) -> {
+            log.info("Application started");
+
+//            this.receiveService.receive().subscribe((next) -> {
+//                        log.info("next position {}", next);
+//                    }, e -> {
+//                        log.info("exception position", e);
+//                    },
+//                    () -> {
+//                        log.info("end position");
+//                    });
 //
 //			int threadCount = 10;
 //			String aircraftName = "hello_world:"+UUID.randomUUID().toString();
@@ -73,7 +86,7 @@ public class FlightmapApplication{
 //				threads[i].join();
 //			}
 //			log.info("FINISHED");
-		};
-	}
+        };
+    }
 
 }

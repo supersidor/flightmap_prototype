@@ -155,7 +155,7 @@ function main() {
     //     x => console.log(x)
     // )
     // return;
-    range(1, 1000).pipe(
+    range(1, 10).pipe(
         mergeMap(idx => getUser(`test${idx}@flight.test2`)),
         mergeMap(testData => {
             return combineLatest([

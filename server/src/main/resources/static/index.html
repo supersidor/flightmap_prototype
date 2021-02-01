@@ -278,9 +278,15 @@
       //   }
       // });
       let heading = 0;
+      let lat = 52.4727;
+      let long = -1.7523;
+      //var pos = L.latLng(52.4727,-1.7523);
       const interval = setInterval(function() {
-        heading = heading + 10;
+        //heading = heading + 10;
         marker.setRotationAngle(heading);
+        lat = lat + 0.001;
+        //long = long + 0.001;
+        marker.setLatLng([lat,long])
       }, 1000);
 
 
